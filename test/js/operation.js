@@ -80,6 +80,13 @@ require([
             outFields:["塔位号","经度","纬度","占地面积m2","永久占地","临时占地","建设区面积","直接影响","标段"],
             infoTemplate: infoTemplate
         });
+
+        /**
+         * 添加图层，并且更改显示的名称
+         * @param map
+         * @param urls
+         * @param id
+         */
         function myAddLayers(map,urls,id) {
             var layer;
             for(var i = 0; i < urls.length; i++){
@@ -174,6 +181,8 @@ require([
             }
             map.getLayer(value).setVisibility(true);
         }
+
+        //myAddLayers来添加图层
         myAddLayers(map5,urls,"leftname");
         myAddLayers(map6,urls,"rightname");
 
@@ -185,11 +194,17 @@ require([
 
         map5.addLayer(feature1);
         map6.addLayer(feature2);
+
+        //执行获取所有杆塔点，使用户可以选择杆塔点
         getALLtowerId();
+
         map5.setLevel(1);
         map6.setLevel(1);
+
+        //禁用单击重新重置中心点
         map5.disableClickRecenter();
         map6.disableClickRecenter();
+
         map5.on("extent-change",function(){
             if(bflag==true)
             {map6.setExtent(map5.extent);}
@@ -225,17 +240,23 @@ require([
             }
         });
 
+        //监听id为left事件，如果值已经被更改就图层的可见状态
         on(dom.byId("left"),"change",function () {
             updateLayerState(map5,"left",urls,"leftname");
         });
 
+        //监听id为right事件，如果值已经被更改就图层的可见状态
         on(dom.byId("right"),"change",function () {
             updateLayerState(map6,"right",urls,"rightname");
         });
 
+        //监听id为towerId事件，根据towerId的变更值在图上查到指定位置
+        //同时定位map5,map6
         on(dom.byId("towerId"),"change",function () {
            locationTower();
         });
+
+        //button的点击事件，如果点击了就恢复到最初的大小
         on(dom.byId("resize"), "click",function () {
             map5.setExtent(extent1);
             map5.centerAt(point);
@@ -243,11 +264,4 @@ require([
             map6.centerAt(point);
             n = 0;
         });
-        feature1.on("click", function(evt) {
-            console.log(evt);
-            evt
-            feature2.add(evt.graphic);
-        });
-
-
     });
