@@ -3,9 +3,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="http://192.168.1.3/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/js/dojo/dijit/themes/tundra/tundra.css">
-    <link rel="stylesheet" href="http://192.168.1.3/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
-    <script src="http://192.168.1.3/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/init.js"></script>
+    <link rel="stylesheet" href="http://localhost/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/js/dojo/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" href="http://localhost/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
+    <script src="http://localhost/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/init.js"></script>
+    <script src="./js/operation.js"></script>
     <style>
         html,body,#map5,#map6 {
             height:100%;
@@ -25,7 +26,7 @@
         #map5{
             border-right:2px solid #999;
         }
-        #time{
+        #leftname{
             background:#FFF;
             color:#888;
             position:relative;
@@ -35,7 +36,7 @@
             width:100px;
             z-index:999;
         }
-        #time1{
+        #rightname{
             background:#FFF;
             color:#888;
             position:relative;
@@ -47,81 +48,21 @@
         }
 
     </style>
-    <script>
-        var map5,map6;
-        var bflag = true;
-        require([
-                "esri/map",
-                "esri/layers/ArcGISDynamicMapServiceLayer",
-                "esri/layers/GraphicsLayer",
-                "esri/graphic",
-                "esri/symbols/PictureMarkerSymbol",
-                "dojo/domReady!"],
-            function(Map, ArcGISDynamicMapServiceLayer, GraphicsLayer, Graphic, PictureMarkerSymbol) {
-                map5 = new Map("map5",{logo:false});
-                map6= new Map("map6",{logo:false});
-                var tiled5 = new ArcGISDynamicMapServiceLayer("http://192.168.1.3:6080/arcgis/rest/services/cj20171103/MapServer");
-                var tiled6 = new ArcGISDynamicMapServiceLayer("http://192.168.1.3:6080/arcgis/rest/services/cj20170711/MapServer");
-                var mouseLayer = new GraphicsLayer();
-                var mouseLayer3 = new GraphicsLayer();
-                map5.addLayer(tiled5);
-                map6.addLayer(tiled6);
-
-                map6.addLayer(mouseLayer);
-                map5.addLayer(mouseLayer3);
-
-                map5.setLevel(4);
-                map6.setLevel(4);
-
-
-                map5.on("extent-change",function(){
-                    if(bflag==true)
-                    {map6.setExtent(map5.extent);}
-
-                });
-                map5.on("mouse-move",function(evt){
-
-                    bflag=true;
-                    mouseLayer.clear();
-                    mouseLayer3.clear();
-                    var pms = new PictureMarkerSymbol("cursor.png",22,24);
-                    var graphic = new Graphic(evt.mapPoint,pms);
-                    mouseLayer.add(graphic);
-                });
-                map6.on("mouse-move",function(evt){
-                    bflag=false;
-                    mouseLayer.clear();
-                    mouseLayer3.clear();
-                    var pms = new PictureMarkerSymbol("cursor.png",22,24);
-                    var graphic = new Graphic(evt.mapPoint,pms);
-                    mouseLayer3.add(graphic);
-                });
-                map6.on("extent-change",function(evt){
-                    if (bflag==false)
-                    {
-                        bflag=true;
-                        map5.setExtent(map6.extent);
-                    }
-                    function error(error){
-                        alert("error:"+ error)
-                    }
-                });
-
-            });
-
-
-    </script>
 </head>
 <body>
+<form>
+    <label>左：<select id="left"></select></label><br>
+    <label>右：<select id="right"></select></label><br>
+    <label>杆塔点：<select id="towerId"></select></label>
+    <label>重置缩放：<button type="button" id="resize">确定</button></label>
+</form>
 <div id="map5" dojotype="dijit.layout.ContentPane" region="center">
-    <div id="time">2015年10月15日</div>
+    <div id="leftname">2015年10月15日</div>
 </div>
 <div id="map6" dojotype="dijit.layout.ContentPane" region="center">
-    <div id="time1">2014年4月1日</div>
+    <div id="rightname">2014年4月1日</div>
 </div>
 </body>
 </html>
-var services = [{"name":"201711031/20170711","type":"MapServer","address":"http://192.168.1.3:6080/arcgis/rest/services/201711031/20170711/MapServer"},{"name":"cj20170515","type":"MapServer","address":"http://192.168.1.3:6080/arcgis/rest/services/cj20170515/MapServer"},{"name":"cj20170711","type":"MapServer","address":"http://192.168.1.3:6080/arcgis/rest/services/cj20170711/MapServer"},{"name":"cj20171103","type":"MapServer","address":"http://192.168.1.3:6080/arcgis/rest/services/cj20171103/MapServer"},{"name":"cj201711031","type":"MapServer","address":"http://192.168.1.3:6080/arcgis/rest/services/cj201711031/MapServer"},{"name":"SampleWorldCities","type":"MapServer","address":"http://192.168.1.3:6080/arcgis/rest/services/SampleWorldCities/MapServer"}];
-
 
 
