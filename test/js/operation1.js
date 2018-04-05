@@ -12,10 +12,14 @@ require([
         "esri/InfoTemplate",
         "esri/tasks/query",
         "esri/tasks/Geoprocessor",
+        "esri/config",
         "dojo/dom",
         "dojo/on",
         "dojo/domReady!"],
-    function(Map, ArcGISDynamicMapServiceLayer,  FeatureLayer, InfoTemplate, Query, Geoprocessor, dom, on){
+    function(Map, ArcGISDynamicMapServiceLayer,  FeatureLayer, InfoTemplate, Query, Geoprocessor, esriConfig, config,
+             dom, on){
+        esriConfig.defaults.io.alwaysUseProxy = false;
+        esriConfig.defaults.io.proxyUrl="http://localhost/proxy.ashx";
         map =  new Map("mapid",{
             logo:false
         });
@@ -63,8 +67,9 @@ require([
                 console.log("信息");
                 console.log(message);
                 var rlt = new ArcGISDynamicMapServiceLayer(urls[3].url+"/"+message.jobId,{
-                    id:message.jobId
-                })
+                    id:message.jobId,
+                    opacity:0.5
+                });
                 map.addLayer(rlt);
             },function (state) {
                 console.log("状态");
