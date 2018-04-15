@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="http://localhost/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/js/dojo/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" href="http://localhost/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/js/esri/css/esri.css">
+    <script src="http://localhost/arcgis_js_v39_sdk/arcgis_js_api/library/3.9/3.9/init.js"></script>
+
+    <script src="./js/operation2.js"></script>
+    <style>
+        html,body,#mapid{
+            height:100%;
+            margin:0;
+            padding:0;
+        }
+        body{
+            background-color:#FFF;
+            overflow:hidden;
+            font-family:"Trebuchet MS";
+        }
+        #tl{
+            z-index: 1000;
+            position: absolute;
+            right: 30px;
+            top: 50px;
+            background-color: white;
+            opacity: 0.9;
+            border: 1px solid #bcdaf5;
+            border-radius: 3px;
+            font-family: "楷体";
+            font-weight: 600;
+            color: #302e2e;
+            font-size: 20px;
+            text-align: center;
+        }
+       #Legend {
+            z-index: 1000;
+            position: absolute;
+            bottom: 2px;
+            float: right;
+            right: 2px;
+            height: 341px;
+            width: 180px;
+            border: 1px solid #C0C0C0;
+            font-size: 16px;
+            font-family: "楷体";
+            font-weight: 600;
+            border-radius: 3px;
+            background-color:white;
+            opacity:1;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mapid"></div>
+   <div id="Legend">
+       <div id="legendDiv"></div>
+   </div>
+</body>
+</html>
